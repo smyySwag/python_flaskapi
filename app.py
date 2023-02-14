@@ -1,13 +1,9 @@
-import pickle
-
 import numpy as np
 from flask import Flask, request, jsonify
+import pickle
 
-model = pickle.load(open(
-    'C:\\Users\\user\\OneDrive - Teesside University\\Documents\\TEESSIDE UNI\\YR 3 first semester\\Final Year Project\\model.pkl',
-    'rb'))
+model = pickle.load(open('model.pkl', 'rb'))
 app = Flask(__name__)
-
 
 @app.route('/')
 def home():
@@ -30,12 +26,13 @@ def predict():
     restecg = request.form.get('restecg')
     exang = request.form.get('exang')
 
-    input_query = np.array([[age, cp, trestbps, chol, thalach, oldpeak, slope, ca, thal, sex, fbs, restecg, exang]], dtype= 'i')
+    input_query = np.array([[age, cp, trestbps, chol, thalach, oldpeak, slope, ca, thal, sex, fbs, restecg, exang]],
+                           dtype=object)
 
     target = model.predict(input_query)[0]
 
-
     return jsonify({'heart_disease': str(target)})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
