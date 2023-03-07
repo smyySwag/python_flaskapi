@@ -1,5 +1,4 @@
 numpy~=1.24.2
 Flask~=2.2.2
-sklearn
 gunicorn
 scikit-learn
